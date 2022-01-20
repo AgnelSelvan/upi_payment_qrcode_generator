@@ -1,5 +1,5 @@
 name: upi_payment_qrcode_generator
-description: UPI Payment QRCode Generator.
+description: UPI Payment QRCode Generator for User to scan and pay the Payee specific amount or user specific amount.
 version: 1.0.2
 homepage: https://github.com/AgnelSelvan/upi_payment_qrcode_generator
 
@@ -18,7 +18,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-#  flutter_lints: ^1.0.0
+  flutter_lints: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
