@@ -7,14 +7,11 @@ void main() {
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
-
-  });
+  setUp(() {});
 
   tearDown(() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
-  });
+  test('getPlatformVersion', () async {});
 }

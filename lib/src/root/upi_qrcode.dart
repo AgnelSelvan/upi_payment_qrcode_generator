@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 
 import '../../upi_payment_qrcode_generator.dart';
 
 /// Generates the UP IPayment QRCode
 class UPIPaymentQRCode extends StatefulWidget {
-
-  const UPIPaymentQRCode({Key? key, required this.upiDetails, this.size}) : super(key: key);
+  const UPIPaymentQRCode({Key? key, required this.upiDetails, this.size})
+      : super(key: key);
 
   /// The [upiDetails] is required, where we need to pass the object of the UPI Details contains in the UPI Object
   ///
@@ -38,47 +39,41 @@ class _UPIPaymentQRCodeState extends State<UPIPaymentQRCode> {
     super.initState();
   }
 
-  Future askPermission()async{
+  Future askPermission() async {
     final status = await Permission.storage.request();
     if (status.isGranted) {
       buildBarcode(Barcode.qrCode(), widget.upiDetails.qrCodeValue);
-    }
-    else{
+    } else {
       throw "Grant Permission to Show the Barcode";
     }
   }
 
   Future buildBarcode(
-      Barcode bc,
-      String data, {
-        String? filename,
-      }) async {
-
+    Barcode bc,
+    String data, {
+    String? filename,
+  }) async {
     /// Create the Barcode
     final svg = bc.toSvg(
       data,
       width: widget.size ?? MediaQuery.of(context).size.width * 0.7,
       height: widget.size ?? MediaQuery.of(context).size.width * 0.7,
     );
-    try{
+    try {
       final dir = await getTemporaryDirectory();
       // Save the image
       filename ??= bc.name.replaceAll(RegExp(r'\s'), '-').toLowerCase();
       File('${dir.path}/$filename.svg').writeAsStringSync(svg);
       _barcodeFile = File('${dir.path}/$filename.svg');
-
-    }
-    catch(e){
+    } catch (e) {
       throw e;
     }
     isLoading = false;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   Future<String?> _readSVGFile() async {
-    if(_barcodeFile == null){
+    if (_barcodeFile == null) {
       return null;
     }
     return await _barcodeFile!.readAsString();
@@ -89,14 +84,17 @@ class _UPIPaymentQRCodeState extends State<UPIPaymentQRCode> {
     return SizedBox(
         width: widget.size,
         height: widget.size,
-        child: isLoading ? Center(child: CircularProgressIndicator()) : _barcodeFile == null ? Text("Error in generating the barcode") : FutureBuilder(
-          future: _readSVGFile(),
-          builder: (context, snapshot){
-            if(snapshot.hasData){
-              return SvgPicture.string('''${snapshot.data}''');
-            }
-            return Container();
-          }
-        ) );
+        child: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : _barcodeFile == null
+                ? Text("Error in generating the barcode")
+                : FutureBuilder(
+                    future: _readSVGFile(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return SvgPicture.string('''${snapshot.data}''');
+                      }
+                      return Container();
+                    }));
   }
 }

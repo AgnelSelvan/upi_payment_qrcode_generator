@@ -17,9 +17,34 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final upiDetails = UPIDetails(
+      upiID: "UPI ID Here eg. 73641234@paytm",
+      payeeName: "Payee Name Here",
+      amount: 1,
+      transactionNote: "Hello World");
+  final upiDetailsWithoutAmount = UPIDetails(
+      upiID: "UPI ID Here eg. 73641234@paytm",
+      payeeName: "Payee Name Here",
+      transactionNote: "Hello World");
+  static const platform =
+      MethodChannel('agnelselvan.upi_payment_qrcode/battery');
 
-  final upiDetails = UPIDetails(upiID: "UPI ID Here eg. 73641234@paytm", payeeName: "Payee Name Here", amount: 1, transactionNote: "Hello World");
-  final upiDetailsWithoutAmount = UPIDetails(upiID: "UPI ID Here eg. 73641234@paytm", payeeName: "Payee Name Here", transactionNote: "Hello World");
+// Get battery level.
+  String _batteryLevel = 'Unknown battery level.';
+
+  Future<void> _getBatteryLevel() async {
+    String batteryLevel;
+    try {
+      final int result = await platform.invokeMethod('getBatteryLevel');
+      batteryLevel = 'Battery level at $result % .';
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +57,29 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("UPI Payment QRCode without Amount", style: TextStyle(fontWeight: FontWeight.bold)),
-              UPIPaymentQRCode(upiDetails: upiDetailsWithoutAmount, size: 200,),
-              Text("Scan QR to Pay", style: TextStyle(color: Colors.grey[600], letterSpacing: 1.2), ),
-              const SizedBox(height: 20,),
-              const Text("UPI Payment QRCode with Amount", style: TextStyle(fontWeight: FontWeight.bold)),
-              UPIPaymentQRCode(upiDetails: upiDetails, size: 200,),
-              Text("Scan QR to Pay", style: TextStyle(color: Colors.grey[600], letterSpacing: 1.2), )
+              const Text("UPI Payment QRCode without Amount",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              UPIPaymentQRCode(
+                upiDetails: upiDetailsWithoutAmount,
+                size: 200,
+              ),
+              Text(
+                "Scan QR to Pay",
+                style: TextStyle(color: Colors.grey[600], letterSpacing: 1.2),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text("UPI Payment QRCode with Amount",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              UPIPaymentQRCode(
+                upiDetails: upiDetails,
+                size: 200,
+              ),
+              Text(
+                "Scan QR to Pay",
+                style: TextStyle(color: Colors.grey[600], letterSpacing: 1.2),
+              )
             ],
           ),
         ),

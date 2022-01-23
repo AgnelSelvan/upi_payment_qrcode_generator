@@ -1,3 +1,1 @@
-enum CurrencyCode{
-  INR
-}
+enum CurrencyCode { INR }
