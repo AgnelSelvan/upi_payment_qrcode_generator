@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:upi_payment_qrcode_generator/upi_payment_qrcode_generator.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// Creates The UPI Payment QRCode
 class MyApp extends StatefulWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -26,25 +23,6 @@ class _MyAppState extends State<MyApp> {
       upiID: "UPI ID Here eg. 73641234@paytm",
       payeeName: "Payee Name Here",
       transactionNote: "Hello World");
-  static const platform =
-      MethodChannel('agnelselvan.upi_payment_qrcode/battery');
-
-// Get battery level.
-  String _batteryLevel = 'Unknown battery level.';
-
-  Future<void> _getBatteryLevel() async {
-    String batteryLevel;
-    try {
-      final int result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = 'Battery level at $result % .';
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-    }
-
-    setState(() {
-      _batteryLevel = batteryLevel;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
