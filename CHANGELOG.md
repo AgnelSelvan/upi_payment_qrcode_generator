@@ -9,8 +9,10 @@
 * Added more descriptive to the description
 
 ## 1.1.0
-* Added Web Support
 * Load Barcode without storing data in local storage.
+
+## 1.1.1
+* Added Web, Linux, Windows Support
 
 
 
