@@ -14,5 +14,8 @@
 ## 1.1.1
 * Added Web, Linux, Windows Support
 
+## 1.1.2
+* Upgraded Kotlin Version
+
 
 
