@@ -14,14 +14,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  //TODO Change UPI ID
   final upiDetails = UPIDetails(
-      upiID: "UPI ID Here eg. 73641234@paytm",
+      upiID: "9167877725@paytm",
       payeeName: "Payee Name Here",
       amount: 1,
       transactionNote: "Hello World");
   final upiDetailsWithoutAmount = UPIDetails(
-      upiID: "UPI ID Here eg. 73641234@paytm",
-      payeeName: "Payee Name Here",
+      upiID: "9167877725@paytm",
+      payeeName: "Agnel Selvan",
       transactionNote: "Hello World");
 
   @override
@@ -40,6 +41,8 @@ class _MyAppState extends State<MyApp> {
               UPIPaymentQRCode(
                 upiDetails: upiDetailsWithoutAmount,
                 size: 200,
+                embeddedImagePath: 'assets/images/logo.png',
+                embeddedImageSize: const Size(60, 60),
               ),
               Text(
                 "Scan QR to Pay",
@@ -53,11 +56,12 @@ class _MyAppState extends State<MyApp> {
               UPIPaymentQRCode(
                 upiDetails: upiDetails,
                 size: 200,
+                upiQRErrorCorrectLevel: UPIQRErrorCorrectLevel.low,
               ),
               Text(
                 "Scan QR to Pay",
                 style: TextStyle(color: Colors.grey[600], letterSpacing: 1.2),
-              )
+              ),
             ],
           ),
         ),
