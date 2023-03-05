@@ -1,11 +1,6 @@
-//TODO Remove Comments
-// import 'package:barcode/barcode.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
-// import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../upi_payment_qrcode_generator.dart';
+import 'package:upi_payment_qrcode_generator/upi_payment_qrcode_generator.dart';
 
 /// Generates the UP IPayment QRCode
 class UPIPaymentQRCode extends StatelessWidget {

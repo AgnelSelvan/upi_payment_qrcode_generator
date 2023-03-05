@@ -17,5 +17,8 @@
 ## 1.1.2
 * Upgraded Kotlin Version
 
+## 1.2.0
+* Added Logo Support in UPI QRCode
+
 
 
