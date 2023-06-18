@@ -1,5 +1,8 @@
+import 'dart:async';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter/services.dart';
 import 'package:upi_payment_qrcode_generator/upi_payment_qrcode_generator.dart';
 
 /// Generates the UP IPayment QRCode
@@ -14,6 +17,9 @@ class UPIPaymentQRCode extends StatelessWidget {
     this.embeddedImageSize,
     this.upiQRErrorCorrectLevel,
     this.qrErrorStateBuilder,
+    this.eyeStyle,
+    this.dataModuleStyle,
+    this.qrCodeLoader,
   }) : super(key: key);
 
   /// The [upiDetails] is required, where we need to pass the object of the UPI Details contains in the UPI Object
@@ -61,25 +67,68 @@ class UPIPaymentQRCode extends StatelessWidget {
   /// The [qrErrorStateBuilder] parameter is used to when there is an error in rendering the QRCode
   final Widget Function(BuildContext, Object?)? qrErrorStateBuilder;
 
+  /// The [eyeStyle] parameter is used to change the eye style of the QRCode
+  final QrEyeStyle? eyeStyle;
+
+  /// The [dataModuleStyle] parameter is used to change the data module style of the QRCode
+  final QrDataModuleStyle? dataModuleStyle;
+
+  /// The [qrCodeLoader] parameter is used to load the QRCode when it is being generated
+  final Widget? qrCodeLoader;
+
   @override
   Widget build(BuildContext context) {
+    final FutureBuilder<ui.Image> qrFutureBuilder = FutureBuilder<ui.Image>(
+      future: embeddedImagePath == null ? null : _loadOverlayImage(),
+      builder: (BuildContext ctx, AsyncSnapshot<ui.Image> snapshot) {
+        if (snapshot.hasError) {
+          return qrErrorStateBuilder?.call(ctx, snapshot.error) ??
+              const Text("Error in loading QRCode");
+        }
+        if (!snapshot.hasData) {
+          return qrCodeLoader ?? const CircularProgressIndicator();
+        }
+        return _qrPainter(snapshot.data);
+      },
+    );
+
     return SizedBox(
       width: size,
       height: size,
-      child: QrImage(
+      child: embeddedImagePath == null ? _qrPainter(null) : qrFutureBuilder,
+    );
+  }
+
+  CustomPaint _qrPainter(ui.Image? image) {
+    return CustomPaint(
+      size: Size.square(size ?? 320),
+      painter: QrPainter(
         data: upiDetails.qrCodeValue,
         version: QrVersions.auto,
-        size: size,
-        gapless: false,
-        errorStateBuilder: qrErrorStateBuilder,
-        errorCorrectionLevel:
-            upiQRErrorCorrectLevel?.value ?? UPIQRErrorCorrectLevel.high.value,
-        embeddedImage:
-            embeddedImagePath != null ? AssetImage(embeddedImagePath!) : null,
+        eyeStyle: eyeStyle ??
+            const QrEyeStyle(
+              eyeShape: QrEyeShape.square,
+              color: Colors.black,
+            ),
+        dataModuleStyle: dataModuleStyle ??
+            const QrDataModuleStyle(
+              dataModuleShape: QrDataModuleShape.square,
+              color: Colors.black,
+            ),
         embeddedImageStyle: QrEmbeddedImageStyle(
           size: embeddedImageSize ?? const Size(40, 40),
         ),
+        errorCorrectionLevel:
+            upiQRErrorCorrectLevel?.value ?? UPIQRErrorCorrectLevel.high.value,
+        embeddedImage: image,
       ),
     );
+  }
+
+  Future<ui.Image> _loadOverlayImage() async {
+    final Completer<ui.Image> completer = Completer<ui.Image>();
+    final ByteData byteData = await rootBundle.load(embeddedImagePath!);
+    ui.decodeImageFromList(byteData.buffer.asUint8List(), completer.complete);
+    return completer.future;
   }
 }

@@ -20,5 +20,8 @@
 ## 1.2.0
 * Added Logo Support in UPI QRCode
 
+## 1.3.0
+* Added Flutter Support for 3.10.0+ Versions
+
 
 

@@ -40,9 +40,17 @@ class _MyAppState extends State<MyApp> {
                   style: TextStyle(fontWeight: FontWeight.bold)),
               UPIPaymentQRCode(
                 upiDetails: upiDetailsWithoutAmount,
-                size: 200,
+                size: 220,
                 embeddedImagePath: 'assets/images/logo.png',
                 embeddedImageSize: const Size(60, 60),
+                eyeStyle: const QrEyeStyle(
+                  eyeShape: QrEyeShape.circle,
+                  color: Colors.black,
+                ),
+                dataModuleStyle: const QrDataModuleStyle(
+                  dataModuleShape: QrDataModuleShape.circle,
+                  color: Colors.black,
+                ),
               ),
               Text(
                 "Scan QR to Pay",
@@ -55,7 +63,7 @@ class _MyAppState extends State<MyApp> {
                   style: TextStyle(fontWeight: FontWeight.bold)),
               UPIPaymentQRCode(
                 upiDetails: upiDetails,
-                size: 200,
+                size: 220,
                 upiQRErrorCorrectLevel: UPIQRErrorCorrectLevel.low,
               ),
               Text(
