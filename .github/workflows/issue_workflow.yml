@@ -1,8 +1,7 @@
-name: Close Inactive Issues
+name: Close Inactive issues
 on:
-    release:
-      types: [created]
-    workflow_dispatch: # Put here!!
+  schedule:
+    - cron: "30 1 * * *"
 
 jobs:
   close-issues:
