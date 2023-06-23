@@ -23,5 +23,8 @@
 ## 1.3.0
 * Added Flutter Support for 3.10.0+ Versions
 
+## 1.4.0
+* Fixed PhonePe QR Code Scanning issue.
+
 
 

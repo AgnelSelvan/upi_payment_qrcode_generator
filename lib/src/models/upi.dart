@@ -48,8 +48,8 @@ class UPIDetails {
 
   String get qrCodeValue {
     if (amount == null) {
-      return "upi://pay?pa=$upiID&pn=$payeeName&tr=$transactionID&am=0&cu=$currencyCode&mode=01&purpose=10&orgid=-&sign=-&tn=$transactionNote";
+      return "upi://pay?pa=$upiID&pn=$payeeName&tr=$transactionID&cu=$currencyCode&mc=0000&mode=02&purpose=00&tn=$transactionNote&tr=$transactionID";
     }
-    return "upi://pay?pa=$upiID&pn=$payeeName&tr=$transactionID&am=$amount&cu=$currencyCode&mode=01&purpose=10&orgid=-&sign=-&tn=$transactionNote";
+    return "upi://pay?pa=$upiID&pn=$payeeName&tr=$transactionID&am=$amount&cu=$currencyCode&mc=0000&mode=02&purpose=00&tn=$transactionNote&tr=$transactionID";
   }
 }

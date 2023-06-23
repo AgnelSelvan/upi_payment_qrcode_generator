@@ -16,14 +16,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   //TODO Change UPI ID
   final upiDetails = UPIDetails(
-      upiID: "9167877725@paytm",
-      payeeName: "Payee Name Here",
+      upiID: "9167877725@axl",
+      payeeName: "Agnel Selvan",
       amount: 1,
       transactionNote: "Hello World");
   final upiDetailsWithoutAmount = UPIDetails(
-      upiID: "9167877725@paytm",
-      payeeName: "Agnel Selvan",
-      transactionNote: "Hello World");
+    upiID: "9167877725@axl",
+    payeeName: "Agnel Selvan",
+    transactionNote: "Hello World",
+  );
 
   @override
   Widget build(BuildContext context) {
