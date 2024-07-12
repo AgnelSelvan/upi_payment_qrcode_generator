@@ -34,7 +34,7 @@ class UPIDetails {
 
   /// Defines the Note to view to the payee when you are paying.
   ///
-  /// The [transactionNote] is justion optional, Default value is empty String
+  /// The [transactionNote] is just an optional, Default value is empty String
   ///
   final String? transactionNote;
 

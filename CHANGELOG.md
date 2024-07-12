@@ -26,5 +26,8 @@
 ## 1.4.0
 * Fixed PhonePe QR Code Scanning issue.
 
+## 1.5.0
+* Migrated to latest Flutter version.
+
 
 

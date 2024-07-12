@@ -42,7 +42,7 @@ class UPIPaymentQRCode extends StatelessWidget {
 
   @Deprecated("Please avoid using noBarcodeWidget, since its not used no where")
 
-  /// The [noBarcodeWidget] paramete is used, If No Barcode gets generated in that case you need to provide a message
+  /// The [noBarcodeWidget] parameter is used, If No Barcode gets generated in that case you need to provide a message
   ///
   /// Default value is a Text message No Data Found for Barcode", It is basically for the QRCode width and height
   ///
@@ -50,7 +50,7 @@ class UPIPaymentQRCode extends StatelessWidget {
 
   /// The [embeddedImagePath] parameter is used to generate embedded asset image in the QR Code
   ///
-  /// Default value is null, If no paramter is passed the image won't show
+  /// Default value is null, If no parameter is passed the image won't show
   ///
   final String? embeddedImagePath;
 
