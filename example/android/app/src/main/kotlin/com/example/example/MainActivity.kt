@@ -1,4 +1,4 @@
-package com.example.upi_qr_code_generator
+package com.example.example
 
 import io.flutter.embedding.android.FlutterActivity
 
